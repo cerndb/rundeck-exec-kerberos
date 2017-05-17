@@ -14,6 +14,11 @@ shift
 CMD=$*
 KERB_KEYTAB=$RD_CONFIG_KERBEROS_KEYTAB
 
+# openshift workaround for anonymous user
+export NSS_WRAPPER_PASSWD=/tmp/nss_passwd
+export NSS_WRAPPER_GROUP=/tmp/nss_group
+export LD_PRELOAD=libnss_wrapper.so
+
 if [ ! -f $KERB_KEYTAB ]; then
   >&2 echo Keytab $KERB_KEYTAB not found
   exit 2
